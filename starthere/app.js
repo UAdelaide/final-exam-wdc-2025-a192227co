@@ -43,62 +43,8 @@ let db;
       )
     `);
 
-    await db.execute(`
-      CREATE TABLE IF NOT EXISTS users (
-        user_id INT AUTO_INCREMENT PRIMARY KEY,
-        username VARCHAR(50) UNIQUE NOT NULL,
-        email VARCHAR(100) UNIQUE NOT NULL,
-        password_hash VARCHAR(255) NOT NULL,
-        role ENUM('owner', 'walker') NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )
-    `);
-
-    await db.execute(`
-      CREATE TABLE IF NOT EXISTS dogs (
-        dog_id INT AUTO_INCREMENT PRIMARY KEY,
-        owner_id INT NOT NULL,
-        name VARCHAR(50) NOT NULL,
-        size ENUM('small', 'medium', 'large') NOT NULL,
-        FOREIGN KEY (owner_id) REFERENCES Users(user_id)
-      )
-    `);
-
     // Insert data if table is empty
-    const [Users] = await db.execute('SELECT COUNT(*) AS count FROM Users');
-    if (Users[0].count === 0) {
-      await db.execute(`
-        INSERT INTO Users (username, email, password_hash, role)
-        VALUES
-        ('carol123', 'carol@example.com', 'hashed789', 'owner'),
-        ('benstilton', 'ben@example.com', 'hashed389', 'owner'),
-        ('tenny123', 'tenny@example.com', 'hashed491', 'owner');
-      `);
-    }
 
-    const [Dogs] = await db.execute('SELECT COUNT(*) AS count FROM Dogs');
-    if (Dogs[0].count === 0) {
-      await db.execute(`
-        INSERT INTO Dogs (name, size, owner_id)
-        VALUES
-        ('Max', 'medium', 3),
-        ('John', 'small', 1),
-        ('Tim', 'medium', 2);
-      `);
-    }
-
-    const [WalkRequests] = await db.execute('SELECT COUNT(*) AS count FROM WalkRequests');
-    if (WalkRequests[0].count === 0) {
-      await db.execute(`
-        INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status)
-        VALUES
-        ((SELECT dog_id FROM Dogs WHERE name = 'Max'), '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
-        ((SELECT dog_id FROM Dogs WHERE name = 'Bella'), '2025-06-10 09:30:00', 45, 'Beachside Ave', 'accepted'),
-        ((SELECT dog_id FROM Dogs WHERE name = 'Graham'), '2025-07-10 10:35:00', 60, 'Turnip St', 'cancelled'),
-        ((SELECT dog_id FROM Dogs WHERE name = 'John'), '2025-08-10 7:40:00', 15, 'Carrot Ave', 'completed'),
-        ((SELECT dog_id FROM Dogs WHERE name = 'Tim'), '2025-04-10 11:00:00', 35, 'Parsley Road', 'accepted');
-      `);
-    }
 
     const [rows] = await db.execute('SELECT COUNT(*) AS count FROM books');
     if (rows[0].count === 0) {
