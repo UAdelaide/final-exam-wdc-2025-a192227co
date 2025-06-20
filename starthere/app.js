@@ -44,7 +44,7 @@ let db;
     `);
 
     await db.execute('
-      
+      CREATE TABLE IF NOT EXISTS 
       ')
 
     // Insert data if table is empty
