@@ -43,9 +43,9 @@ let db;
       )
     `);
 
-    await db.execute('
-      CREATE TABLE IF NOT EXISTS users (
-
+    await db.execute(
+      CREATE TABLE IF NOT EXISTS users(
+      id INT AUTO_INCREMENT PRIMARY KEY,
 
     )
       ');
