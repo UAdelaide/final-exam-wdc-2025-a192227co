@@ -45,10 +45,10 @@ let db;
 
     await db.execute(`
       CREATE TABLE IF NOT EXISTS users (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      username 
-    )
-      `);
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(255)
+      )
+    `);
 
     // Insert data if table is empty
     const [rows] = await db.execute('SELECT COUNT(*) AS count FROM books');
