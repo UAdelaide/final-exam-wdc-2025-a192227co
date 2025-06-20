@@ -34,10 +34,10 @@ createWebsite() {
         async fetchDogImage() {
             const response = await fetch('https://dog.ceo/api/breeds/image/random');
             const json = await response.json();
-            this.imageu
+            this.dogImageUrl = json.message;
         }
     }
-}
+};
 </script>
 
 </body>
