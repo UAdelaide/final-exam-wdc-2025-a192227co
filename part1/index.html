@@ -38,7 +38,7 @@ createApp( {
             const json = await response.json();
             this.dogImageUrl = json.message;
         }
-    }
+    },
 
     mounted() {
         this.fetchDogImage();
