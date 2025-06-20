@@ -25,7 +25,7 @@
 
 const { createApp } = Vue;
 
-createApp() {
+createApp( {
     data() {
         return {
             dogImageUrl: ''
@@ -43,7 +43,7 @@ createApp() {
     mounted() {
         this.fetchDogImage();
     }
-}).mount;
+}).mount('#app');
 </script>
 </body>
 </html>
