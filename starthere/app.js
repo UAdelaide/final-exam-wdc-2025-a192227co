@@ -91,6 +91,19 @@ let db;
       `);
     }
 
+    const [WalkRequests] = await db.execute('SELECT COUNT(*) AS count FROM WalkRequests');
+    if (WalkRequests[0].count === 0) {
+      await db.execute(`
+        INSERT INTO WalkRequests (name, size, owner_id)
+        VALUES
+        ('Max', 'medium', (SELECT user_id FROM Users WHERE username = 'alice123')),
+        ('Bella', 'small', (SELECT user_id FROM Users WHERE username = 'carol123')),
+        ('Graham', 'large', (SELECT user_id FROM Users WHERE username = 'benstilton')),
+        ('John', 'small', (SELECT user_id FROM Users WHERE username = 'tenny123')),
+        ('Tim', 'medium', (SELECT user_id FROM Users WHERE username = 'alice123'));
+      `);
+    }
+
     const [rows] = await db.execute('SELECT COUNT(*) AS count FROM books');
     if (rows[0].count === 0) {
       await db.execute(`
