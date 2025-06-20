@@ -39,7 +39,11 @@ createApp() {
             this.dogImageUrl = json.message;
         }
     }
-};
+
+    mounted() {
+        this.fetchDogImage();
+    }
+}).mount;
 </script>
 </body>
 </html>
