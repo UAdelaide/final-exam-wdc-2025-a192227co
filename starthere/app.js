@@ -71,7 +71,7 @@ let db;
         INSERT INTO users (username, email, password_hash, role) VALUES
         ('tenny123', 'tenny@example.com', 'hashed491', 'owner'),
         ('carol123', 'carol@example.com', 'hashed789', 'owner'),
-        ('Brave New World', 'Aldous Huxley')
+        ('benstilton', 'ben@example.com', 'hashed389', 'owner');
       `);
     }
 
