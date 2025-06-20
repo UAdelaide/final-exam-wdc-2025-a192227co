@@ -75,6 +75,16 @@ let db;
       `);
     }
 
+    const [dogs] = await db.execute('SELECT COUNT(*) AS count FROM dogs');
+    if (dogs[0].count === 0) {
+      await db.execute(`
+        INSERT INTO users (username, email, password_hash, role) VALUES
+        ('tenny123', 'tenny@example.com', 'hashed491', 'owner'),
+        ('carol123', 'carol@example.com', 'hashed789', 'owner'),
+        ('benstilton', 'ben@example.com', 'hashed389', 'owner');
+      `);
+    }
+
     const [rows] = await db.execute('SELECT COUNT(*) AS count FROM books');
     if (rows[0].count === 0) {
       await db.execute(`
