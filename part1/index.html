@@ -32,7 +32,9 @@ createWebsite() {
 
     methods: {
         async fetchDogImage() {
-            const response = await fetch('')
+            const response = await fetch('https://dog.ceo/api/breeds/image/random');
+            const json = await response.json();
+            this.imageu
         }
     }
 }
