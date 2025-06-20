@@ -82,10 +82,8 @@ let db;
         INSERT INTO Dogs (name, size, owner_id)
         VALUES
         ('Max', 'medium', 3),
-        ('Bella', 'small', (SELECT user_id FROM Users WHERE username = 'carol123')),
-        ('Graham', 'large', (SELECT user_id FROM Users WHERE username = 'benstilton')),
-        ('John', 'small', (SELECT user_id FROM Users WHERE username = 'tenny123')),
-        ('Tim', 'medium', (SELECT user_id FROM Users WHERE username = 'alice123'));
+        ('John', 'small', 1),
+        ('Tim', 'medium', 2);
       `);
     }
 
