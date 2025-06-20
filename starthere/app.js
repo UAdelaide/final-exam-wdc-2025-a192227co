@@ -66,9 +66,9 @@ let db;
 
     // Insert data if table is empty
     const [users] = await db.execute('SELECT COUNT(*) AS count FROM users');
-    if (rows[0].count === 0) {
+    if (users[0].count === 0) {
       await db.execute(`
-        INSERT INTO books (title, author) VALUES
+        INSERT INTO users (username, author) VALUES
         ('1984', 'George Orwell'),
         ('To Kill a Mockingbird', 'Harper Lee'),
         ('Brave New World', 'Aldous Huxley')
