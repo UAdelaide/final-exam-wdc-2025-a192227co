@@ -44,7 +44,7 @@ let db;
     `);
 
     await db.execute('
-      CREATE TABLE IF NOT EXISTS 
+      CREATE TABLE IF NOT EXISTS users 
       ')
 
     // Insert data if table is empty
