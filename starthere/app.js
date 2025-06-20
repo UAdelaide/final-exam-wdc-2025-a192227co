@@ -44,8 +44,11 @@ let db;
     `);
 
     await db.execute('
-      CREATE TABLE IF NOT EXISTS users 
-      ')
+      CREATE TABLE IF NOT EXISTS users (
+
+
+    )
+      ');
 
     // Insert data if table is empty
     const [rows] = await db.execute('SELECT COUNT(*) AS count FROM books');
