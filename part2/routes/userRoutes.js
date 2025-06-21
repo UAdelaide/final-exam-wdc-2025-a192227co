@@ -75,7 +75,7 @@ router.get('/dogs', async (req, res) => {
     return res.status(403).json({ error: 'Cant access this' });
   }
 
-  
+  const ownerID = req.session.user.i;
 
   res.clearCookie('connect.sid');
   res.json({ message: 'Successful log out' });
