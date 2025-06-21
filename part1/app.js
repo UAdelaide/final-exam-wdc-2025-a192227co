@@ -165,6 +165,7 @@ app.get('/api/walkrequests/open', async (req, res) => {
             FROM Dogs dog
             Join Users user ON dog.owner_id = user.user_id
         `);
+        res.json(WalkRequests);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch walk requests' });
     }
