@@ -141,7 +141,7 @@ module.exports = app;
 
 app.get('/api/dogs', async (req, res) => {
     try {
-        const [Dogs] = await db.execute('
+        const [Dogs] = await db.execute(`
             SELECT
                 dog.name AS dogName,
                 dog.size,
