@@ -73,7 +73,11 @@
             const res = await fetch('/api/dogs');
             const dogs = await res.json();
 
-            dogs.map()
+            dogs.map(async dog => {
+              try {
+                const imgRes = await fecth
+              }
+            })
           }
         }
 
