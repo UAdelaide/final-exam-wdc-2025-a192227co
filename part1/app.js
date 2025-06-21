@@ -93,7 +93,7 @@ let db;
         INSERT INTO Users (username, email, password_hash, role)
         VALUES
         ('carol123', 'carol@example.com', 'hashed789', 'owner'),
-        ('benstilton', 'ben@example.com', 'hashed389', 'owner'),
+        ('benstilton', 'ben@example.com', 'hashed389', 'walker'),
         ('tenny123', 'tenny@example.com', 'hashed491', 'owner');
       `);
         }
@@ -126,7 +126,8 @@ let db;
         INSERT INTO WalkRatings (request_id, walker_id, owner_id, rating, comments)
         VALUES
         ((SELECT request_id FROM WalkRequests WHERE status = 'completed' AND dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Tim')),
-        (SELECT user_id FROM Users WHERE username = 'carol123)
+        (SELECT user_id FROM Users WHERE username = 'carol123),
+
 
       `);
         }
