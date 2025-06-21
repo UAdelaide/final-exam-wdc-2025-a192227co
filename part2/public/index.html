@@ -38,7 +38,10 @@
               headers: {'CONTENT-TYPE': 'application/json' },
               body: JSON, stringify({email:this.email, password:this.password})
             });
-            
+
+            const data = await response.json();
+
+            if (!response.ok)
     }).mount('#app');
   </script>
 
