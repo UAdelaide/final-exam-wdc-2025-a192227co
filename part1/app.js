@@ -156,7 +156,7 @@ module.exports = app;
 
 app.get('/api/dogs', async (req, res) => {
     try {
-        const [Dogs] = await db.execute('SELECT * FROM Dogs');
+        const [NumberOfDogs] = await db.execute('SELECT * FROM Dogs');
         res.json(Dogs);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch dogs' });
@@ -165,8 +165,8 @@ app.get('/api/dogs', async (req, res) => {
 
 app.get('/api/walkrequests/open', async (req, res) => {
     try {
-        const [WalkRequests] = await db.execute('SELECT * FROM WalkRequests');
-        res.json(WalkRequests);
+        const [NumberOfWalkRequests] = await db.execute('SELECT * FROM WalkRequests');
+        res.json(NumberOfWalkRequests);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch walk requests' });
     }
