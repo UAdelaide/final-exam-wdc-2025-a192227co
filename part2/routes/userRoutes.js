@@ -81,13 +81,11 @@ router.get('/dogs', async (req, res) => {
     const [rows] = await db.query(`
       SELECT dog_id, name FROM Dogs
       WHERE owner_id = ?
-    `) [ownerId]);
+    `, [ownerId]);
 
-
-
-  res.json(rows);
-} catch (err) {
-  res.status(500).json({ error: "Failed to load" });
-}
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to load" });
+  }
 });
 
