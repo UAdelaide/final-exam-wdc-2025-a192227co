@@ -62,8 +62,10 @@ module.exports = router;
 router.post('/logout', async (req, res) => {
   req.session.destroy(err=> {
     if (err) {
-      return res.status(500).json( { error: "L"})
+      return res.status(500).json( { error: "Log out failed"});
     }
+
+    res.clearCoo
 
   })
 
