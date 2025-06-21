@@ -125,7 +125,7 @@ let db;
             await db.execute(`
         INSERT INTO WalkRatings (request_id, walker_id, owner_id, rating, comments)
         VALUES
-        ((SELECT request_id FROM WalkRequests WHERE status = 'completed' and ), '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
+        ((SELECT request_id FROM WalkRequests WHERE status = 'completed' AND dog_id = (SELECT dog_id)), '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
         ((SELECT dog_id FROM Dogs WHERE name = 'John'), '2025-08-10 7:40:00', 15, 'Carrot Ave', 'completed'),
         ((SELECT dog_id FROM Dogs WHERE name = 'Tim'), '2025-04-10 11:00:00', 35, 'Parsley Road', 'accepted');
 
