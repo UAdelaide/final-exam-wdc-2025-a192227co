@@ -79,12 +79,13 @@ router.get('/dogs', async (req, res) => {
 
   try {
     const [rows] = await db.query(
-  
+
     )
 
   }
 
-  res.clearCookie('connect.sid');
-  res.json({ message: 'Successful log out' });
+  res.json(rows);
+} catch(err)
+
 });
 });
