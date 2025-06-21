@@ -137,9 +137,7 @@ let db;
         (SELECT user_id FROM Users WHERE username = 'tenny123'),)
         5,
         'Amazing people'
-        ),
-
-
+        );
       `);
         }
 
