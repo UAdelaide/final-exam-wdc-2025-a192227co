@@ -204,7 +204,7 @@ app.get('/api/walkers/summary', async (req, res) => {
                 user.username AS
 
             FROM Users user
-            LEFT JOIN W
+            LEFT JOIN WalkRatings rating 
             JOIN Users user ON dog.owner_id = user.user_id
             WHERE walkRequest.status = 'open'
         `);
