@@ -201,13 +201,14 @@ app.get('/api/walkers/summary', async (req, res) => {
     try {
         const [walkers] = await db.execute(`
             SELECT
-                user.username AS
+                user.username AS walker_username,
+                COUNT(DISTINCT r)
 
             FROM Users user
             LEFT JOIN WalkRatings rating ON user.user_id = rating.walker_id
             LEFT JOIN WalkRequests walkRequest ON user.user_id = walkRequest.dog_id AND walkRequest.status = 'completed'
             where user.role = 'walker'
-            GROUP 
+            GROUP BY user.username
         `);
         res.json(WalkRequests);
     } catch (err) {
