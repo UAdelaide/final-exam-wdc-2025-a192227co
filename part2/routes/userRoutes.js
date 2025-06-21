@@ -69,3 +69,14 @@ router.post('/logout', async (req, res) => {
     res.json({ message: 'Successful log out' });
   });
 });
+
+router.post('/logout', async (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).json({ error: "Log out failed" });
+    }
+
+    res.clearCookie('connect.sid');
+    res.json({ message: 'Successful log out' });
+  });
+});
