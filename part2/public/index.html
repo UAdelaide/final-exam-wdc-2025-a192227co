@@ -56,12 +56,10 @@
             else {
               this.error = 'You are not a walker or an owner.';
             }
-
-            catch (err) {
+         } catch (err) {
               this.error = 'Error has occured whilst trying to login';
             }
           }
-        }
     }).mount('#app');
   </script>
 
