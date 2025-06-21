@@ -121,7 +121,7 @@ let db;
         }
 
         const [WalkRatings] = await db.execute('SELECT COUNT(*) AS count FROM WalkRatings');
-        if (WalkRaitings[0].count === 0) {
+        if (WalkRatings[0].count === 0) {
             await db.execute(`
         INSERT INTO WalkRatings (request_id, walker_id, owner_id, rating, comments)
         VALUES
