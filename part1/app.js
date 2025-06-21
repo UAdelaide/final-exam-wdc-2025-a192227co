@@ -130,8 +130,9 @@ let db;
         (SELECT user_id FROM Users WHERE username = 'carol123'),
         2,
         'Shocking service'
+        )
 
-        
+
       `);
         }
 
