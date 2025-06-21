@@ -145,10 +145,10 @@ app.get('/api/dogs', async (req, res) => {
             SELECT
                 dog.name AS dogName,
                 dog.size
-            user.username AS ownerUsername
+            u.username AS ownerUsername
 
             FROM Dogs dog
-            Join USERS user ON dog.owner_id = user.user_id
+            Join USERS u ON dog.owner_id = u.user_id
         `);
         res.json(Dogs);
     } catch (err) {
