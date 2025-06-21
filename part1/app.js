@@ -132,11 +132,11 @@ let db;
         'Shocking service'
         ),
 
-        ((SELECT request_id FROM WalkRequests WHERE status = 'completed' AND dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Tim')),
+        ((SELECT request_id FROM WalkRequests WHERE status = 'completed' AND dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Max')),
         (SELECT user_id FROM Users WHERE username = 'benstilton'),
         (SELECT user_id FROM Users WHERE username = 'carol123'),)
-        2,
-        'Shocking service'
+        5,
+        'Amazing people'
         ),
 
 
