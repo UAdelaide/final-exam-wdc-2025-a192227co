@@ -164,7 +164,8 @@ app.get('/api/walkrequests/open', async (req, res) => {
               user.username AS ownerUsername
             FROM WalkRequests walkRequest
             JOIN Users user ON dog.owner_id = user.user_id
-            JOIN Dogs dog ON walkRequest.dog_id = dog.
+            JOIN Dogs dog ON walkRequest.dog_id = dog.dog_id
+            WHERE walkR
         `);
         res.json(WalkRequests);
     } catch (err) {
