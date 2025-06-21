@@ -75,8 +75,13 @@
         }
 
         async function getCurrentUser() {
+          try {
+            constant res = await fetch('/api/users/me', {
+              method: 'GET'
+            }
 
-          
+          }
+
         }
 
         onMounted(() => {
