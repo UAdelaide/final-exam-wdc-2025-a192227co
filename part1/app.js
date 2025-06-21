@@ -148,7 +148,7 @@ app.get('/api/dogs', async (req, res) => {
             user.username AS ownerUsername
 
             FROM Dogs dog
-            Join USERS on user 
+            Join USERS user ON dog.owner
 
         );
         res.json(Dogs);
