@@ -197,9 +197,9 @@ app.get('/api/walkrequests/open', async (req, res) => {
     }
 });
 
-app.get('/api/walkrequests/open', async (req, res) => {
+app.get('/api/walkers/summary', async (req, res) => {
     try {
-        const [WalkRequests] = await db.execute(`
+        const [walkers] = await db.execute(`
             SELECT
                walkRequest.request_id,
                dog.name AS dogName,
