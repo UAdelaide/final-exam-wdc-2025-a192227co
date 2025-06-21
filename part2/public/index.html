@@ -41,7 +41,10 @@
 
             const data = await response.json();
 
-            if (!response.ok)
+            if (!response.ok) {
+              this.error = data.error;
+              
+            }
     }).mount('#app');
   </script>
 
