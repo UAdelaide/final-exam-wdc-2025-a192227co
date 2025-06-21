@@ -202,7 +202,7 @@ app.get('/api/walkers/summary', async (req, res) => {
         const [walkers] = await db.execute(`
             SELECT
                 user.username AS walker_username,
-                COUNT(DISTINCT r)
+                COUNT(DISTINCT rating.rating_id) AS overallRating
 
             FROM Users user
             LEFT JOIN WalkRatings rating ON user.user_id = rating.walker_id
