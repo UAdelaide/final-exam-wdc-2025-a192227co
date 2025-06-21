@@ -123,19 +123,20 @@ let db;
         const [WalkRatings] = await db.execute('SELECT COUNT(*) AS count FROM WalkRatings');
         if (WalkRaitings[0].count === 0) {
             await db.execute(`
-        CREATE TABLE WalkRatings (
-    rating_id INT AUTO_INCREMENT PRIMARY KEY,
-    request_id INT NOT NULL,
-    walker_id INT NOT NULL,
-    owner_id INT NOT NULL,
-    rating INT CHECK (rating BETWEEN 1 AND 5),
-    comments TEXT,
-    rated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (request_id) REFERENCES WalkRequests(request_id),
-    FOREIGN KEY (walker_id) REFERENCES Users(user_id),
-    FOREIGN KEY (owner_id) REFERENCES Users(user_id),
-    CONSTRAINT unique_rating_per_walk UNIQUE (request_id)
-);
+        INSERT INTO WalkRatings (dog_id, requested_time, duration_minutes, location, status)
+        VALUES
+        ((SELECT dog_id FROM Dogs WHERE name = 'Max'), '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
+        ((SELECT dog_id FROM Dogs WHERE name = 'John'), '2025-08-10 7:40:00', 15, 'Carrot Ave', 'completed'),
+        ((SELECT dog_id FROM Dogs WHERE name = 'Tim'), '2025-04-10 11:00:00', 35, 'Parsley Road', 'accepted');
+
+        INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status)
+VALUES
+((SELECT dog_id FROM Dogs WHERE name = 'Max'), '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
+((SELECT dog_id FROM Dogs WHERE name = 'Bella'), '2025-06-10 09:30:00', 45, 'Beachside Ave', 'accepted'),
+((SELECT dog_id FROM Dogs WHERE name = 'Graham'), '2025-07-10 10:35:00', 60, 'Turnip St', 'cancelled'),
+((SELECT dog_id FROM Dogs WHERE name = 'John'), '2025-08-10 7:40:00', 15, 'Carrot Ave', 'completed'),
+((SELECT dog_id FROM Dogs WHERE name = 'Tim'), '2025-04-10 11:00:00', 35, 'Parsley Road', 'accepted');
+      `);
         }
 
     } catch (err) {
