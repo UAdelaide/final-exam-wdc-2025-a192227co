@@ -149,7 +149,7 @@ app.get('/api/dogs', async (req, res) => {
 
             FROM Dogs dog
             Join USERS user ON dog.owner_id = user.user_id
-        ');
+        `);
         res.json(Dogs);
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch dogs' });
