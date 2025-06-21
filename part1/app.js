@@ -201,7 +201,7 @@ app.get('/api/walkers/summary', async (req, res) => {
     try {
         const [walkers] = await db.execute(`
             SELECT
-
+                user
             FROM Users user
             JOIN Dogs dog ON walkRequest.dog_id = dog.dog_id
             JOIN Users user ON dog.owner_id = user.user_id
