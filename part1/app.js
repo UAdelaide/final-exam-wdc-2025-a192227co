@@ -161,7 +161,9 @@ app.get('/api/walkrequests/open', async (req, res) => {
             SELECT
               walkRequest.request_id,
               dog.name AS dogName,
-              dog.size,
+              walkRequest.requested_time,
+              walkRequest.duration_minutes,
+              walkRequest.location
               user.username AS ownerUsername
             FROM WalkRequests walkRequest
             JOIN Users user ON dog.owner_id = user.user_id
