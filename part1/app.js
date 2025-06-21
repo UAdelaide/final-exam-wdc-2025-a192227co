@@ -159,6 +159,7 @@ app.get('/api/walkrequests/open', async (req, res) => {
     try {
         const [WalkRequests] = await db.execute(`
             SELECT
+            
               dog.name AS dogName,
               dog.size,
               user.username AS ownerUsername
