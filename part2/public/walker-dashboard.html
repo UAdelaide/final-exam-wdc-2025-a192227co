@@ -84,8 +84,10 @@
             if (!res.ok) throw new Error('Not logged in');
             const user = await res.json();
             return user;
-            
-
+          } catch (err) {
+            console.error('There was an error', err);
+            return null;
+          }
           }
 
         }
