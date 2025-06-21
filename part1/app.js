@@ -144,7 +144,10 @@ app.get('/api/dogs', async (req, res) => {
         const [Dogs] = await db.execute('
             SELECT
             dog.name AS dogName,
-            dpg
+            dog.size,
+            user.username AS ownerUsername
+
+        
 
         );
         res.json(Dogs);
