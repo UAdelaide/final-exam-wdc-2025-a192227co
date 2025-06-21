@@ -159,12 +159,12 @@ app.get('/api/walkrequests/open', async (req, res) => {
     try {
         const [WalkRequests] = await db.execute(`
             SELECT
-              walkRequest.request_id,
-              dog.name AS dogName,
-              walkRequest.requested_time,
-              walkRequest.duration_minutes,
-              walkRequest.location
-              user.username AS ownerUsername
+               walkRequest.request_id,
+               dog.name AS dogName,
+               walkRequest.requested_time,
+               walkRequest.duration_minutes,
+               walkRequest.location,
+               user.username AS ownerUsername
             FROM WalkRequests walkRequest
             JOIN Users user ON dog.owner_id = user.user_id
             JOIN Dogs dog ON walkRequest.dog_id = dog.dog_id
