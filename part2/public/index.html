@@ -51,16 +51,15 @@
             }
 
             else if (data.user.role) == "walker" {
-              window.location.href = 'walker-dashboard.html'
+              window.location.href = 'walker-dashboard.html';
             }
             else {
-              this.error = 'You are not a walker or an owner.'
+              this.error = 'You are not a walker or an owner.';
             }
 
             catch (err) {
-              this
+              this.error = 'Error has occured whilst trying to login';
             }
-
           }
         }
       }
