@@ -70,8 +70,8 @@ router.post('/logout', async (req, res) => {
   });
 });
 
-router.post('/logout', async (req, res) => {
-  req.session.destroy(err => {
+router.get('/dogs', async (req, res) => {
+  if (!req.session.destroy(err => {
     if (err) {
       return res.status(500).json({ error: "Log out failed" });
     }
