@@ -163,8 +163,8 @@ app.get('/api/walkrequests/open', async (req, res) => {
               dog.size,
               user.username AS ownerUsername
             FROM WalkRequests walkRequest
-            JOI
-            Join Users user ON dog.owner_id = user.user_id
+            JOIN Users user ON dog.owner_id = user.user_id
+            oin Users user ON dog.owner_id = user.user_id
         `);
         res.json(WalkRequests);
     } catch (err) {
