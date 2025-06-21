@@ -23,7 +23,7 @@ let db;
         });
 
         // Create the database if it doesn't exist
-        await connection.query('CREATE DATABASE IF NOT EXISTS DogWalkService');
+        await connection.query('CREATE DATABASE IF NOT EXISTS DogWalk');
         await connection.end();
 
         // Now connect to the created database
@@ -31,26 +31,107 @@ let db;
             host: 'localhost',
             user: 'root',
             password: '',
-            database: 'DogWalkService'
+            database: 'DogWalk'
         });
 
         // Create a table if it doesn't exist
+
         await db.execute(`
-      CREATE TABLE IF NOT EXISTS books (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        title VARCHAR(255),
-        author VARCHAR(255)
+      CREATE TABLE IF NOT EXISTS users (
+        user_id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(50) UNIQUE NOT NULL,
+        email VARCHAR(100) UNIQUE NOT NULL,
+        password_hash VARCHAR(255) NOT NULL,
+        role ENUM('owner', 'walker') NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
 
+        await db.execute(`
+      CREATE TABLE IF NOT EXISTS dogs (
+        dog_id INT AUTO_INCREMENT PRIMARY KEY,
+        owner_id INT NOT NULL,
+        name VARCHAR(50) NOT NULL,
+        size ENUM('small', 'medium', 'large') NOT NULL,
+        FOREIGN KEY (owner_id) REFERENCES Users(user_id)
+      )
+    `);
+
+        await db.execute(`
+      CREATE TABLE WalkRequests (
+    request_id INT AUTO_INCREMENT PRIMARY KEY,
+    dog_id INT NOT NULL,
+    requested_time DATETIME NOT NULL,
+    duration_minutes INT NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    status ENUM('open', 'accepted', 'completed', 'cancelled') DEFAULT 'open',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (dog_id) REFERENCES Dogs(dog_id)
+    )
+    `);
+
+        await db.execute(`
+      CREATE TABLE WalkRatings (
+    rating_id INT AUTO_INCREMENT PRIMARY KEY,
+    request_id INT NOT NULL,
+    walker_id INT NOT NULL,
+    owner_id INT NOT NULL,
+    rating INT CHECK (rating BETWEEN 1 AND 5),
+    comments TEXT,
+    rated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (request_id) REFERENCES WalkRequests(request_id),
+    FOREIGN KEY (walker_id) REFERENCES Users(user_id),
+    FOREIGN KEY (owner_id) REFERENCES Users(user_id),
+    CONSTRAINT unique_rating_per_walk UNIQUE (request_id)
+    )
+    `);
+
         // Insert data if table is empty
-        const [rows] = await db.execute('SELECT COUNT(*) AS count FROM books');
-        if (rows[0].count === 0) {
+        const [Users] = await db.execute('SELECT COUNT(*) AS count FROM Users');
+        if (Users[0].count === 0) {
             await db.execute(`
-        INSERT INTO books (title, author) VALUES
-        ('1984', 'George Orwell'),
-        ('To Kill a Mockingbird', 'Harper Lee'),
-        ('Brave New World', 'Aldous Huxley')
+        INSERT INTO Users (username, email, password_hash, role)
+        VALUES
+        ('carol123', 'carol@example.com', 'hashed789', 'owner'),
+        ('benstilton', 'ben@example.com', 'hashed389', 'owner'),
+        ('tenny123', 'tenny@example.com', 'hashed491', 'owner');
+      `);
+        }
+
+        const [Dogs] = await db.execute('SELECT COUNT(*) AS count FROM Dogs');
+        if (Dogs[0].count === 0) {
+            await db.execute(`
+        INSERT INTO Dogs (name, size, owner_id)
+        VALUES
+        ('Max', 'medium', 3),
+        ('John', 'small', 1),
+        ('Tim', 'medium', 2);
+      `);
+        }
+
+        const [WalkRequests] = await db.execute('SELECT COUNT(*) AS count FROM WalkRequests');
+        if (WalkRequests[0].count === 0) {
+            await db.execute(`
+        INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status)
+        VALUES
+        ((SELECT dog_id FROM Dogs WHERE name = 'Max'), '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
+        ((SELECT dog_id FROM Dogs WHERE name = 'Bella'), '2025-06-10 09:30:00', 45, 'Beachside Ave', 'accepted'),
+        ((SELECT dog_id FROM Dogs WHERE name = 'Graham'), '2025-07-10 10:35:00', 60, 'Turnip St', 'cancelled'),
+        ((SELECT dog_id FROM Dogs WHERE name = 'John'), '2025-08-10 7:40:00', 15, 'Carrot Ave', 'completed'),
+        ((SELECT dog_id FROM Dogs WHERE name = 'Tim'), '2025-04-10 11:00:00', 35, 'Parsley Road', 'accepted');
+      `);
+        }
+
+        const [WalkRequests] = await db.execute('SELECT COUNT(*) AS count FROM WalkRequests');
+        if (WalkRequests[0].count === 0) {
+            await db.execute(`
+        INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status)
+        VALUES
+        ((SELECT dog_id FROM Dogs WHERE name = 'Max'), '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
+        ((SELECT dog_id FROM Dogs WHERE name = 'Bella'), '2025-06-10 09:30:00', 45, 'Beachside Ave', 'accepted'),
+        ((SELECT dog_id FROM Dogs WHERE name = 'Graham'), '2025-07-10 10:35:00', 60, 'Turnip St', 'cancelled'),
+        ((SELECT dog_id FROM Dogs WHERE name = 'John'), '2025-08-10 7:40:00', 15, 'Carrot Ave', 'completed'),
+        ((SELECT dog_id FROM Dogs WHERE name = 'Tim'), '2025-04-10 11:00:00', 35, 'Parsley Road', 'accepted');
       `);
         }
 
@@ -73,11 +154,30 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 module.exports = app;
 
-app.get('/', async (req, res) => {
+app.get('/api/dogs', async (req, res) => {
     try {
-        const [books] = await db.execute('SELECT * FROM books');
-        res.json(books);
+        const [Dogs] = await db.execute('SELECT * FROM Dogs');
+        res.json(Dogs);
     } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch books' });
+        res.status(500).json({ error: 'Failed to fetch dogs' });
     }
 });
+
+app.get('/api/walkrequests/open', async (req, res) => {
+    try {
+        const [WalkRequests] = await db.execute('SELECT * FROM WalkRequests');
+        res.json(WalkRequests);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch walk requests' });
+    }
+});
+
+app.get('/api/walkrequests/open', async (req, res) => {
+    try {
+        const [WalkRequests] = await db.execute('SELECT * FROM WalkRequests');
+        res.json(WalkRequests);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch walk requests' });
+    }
+});
+
