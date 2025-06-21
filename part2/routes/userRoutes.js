@@ -66,7 +66,7 @@ router.post('/logout', async (req, res) => {
     }
 
     res.clearCookie('connect.sid');
-    res
+    res.json({message:'Unsuccesful log out'})
 
   })
 
